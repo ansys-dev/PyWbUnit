@@ -15,8 +15,10 @@
 ## 安装使用
 
 预编译的二进制库目前只支持Windows x64平台的Python3.7、3.8版本，安装方法如下：
-	pip install PyWbUnit-0.2.0-cp37-none-win_amd64.whl
-    pip install PyWbUnit-0.2.0-cp38-none-win_amd64.whl
+```batch
+pip install PyWbUnit-0.2.0-cp37-none-win_amd64.whl
+pip install PyWbUnit-0.2.0-cp38-none-win_amd64.whl
+```
 
 ## 使用方法
 首先从PyWbUnit模块中导入CoWbUnitProcess类，详细文档说明可以通过help(CoWbUnitProcess)查看，以公众号文章：《[ANSYS中使用Python实现高效结构仿真](https://mp.weixin.qq.com/s?__biz=Mzg5MDMwNDIwMQ==&mid=2247484455&idx=1&sn=aac9501bb6fec23276353e4a27c10af9&chksm=cfdfe781f8a86e97bc5afb34678036318ce09d442d82cbeab195c8bdbaeb9e3e00606951469c&token=1162439082&lang=zh_CN#rd)》为例，演示如何使用PyWbUnit调用Workbench完成联合仿真的过程：
