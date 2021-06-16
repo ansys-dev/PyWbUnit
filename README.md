@@ -19,7 +19,67 @@
 pip install PyWbUnit-0.2.0-cp37-none-win_amd64.whl
 pip install PyWbUnit-0.2.0-cp38-none-win_amd64.whl
 ```
+## API说明
 
+class CoWbUnitProcess(builtins.object)
+ |
+ | ` CoWbUnitProcess(workDir=None, version=201)`
+ |
+ |  Unit class for co-simulation with Workbench using Python.
+ |
+ |  >>> coWbUnit = CoWbUnitProcess()
+ |  >>> coWbUnit.initialize()
+ |  >>> command = 'GetTemplate(TemplateName="Static Structural", Solver="ANSYS").CreateSystem()'
+ |  >>> coWbUnit.execWbCommand(command)
+ |  >>> coWbUnit.execWbCommand('systems=GetAllSystems()')
+ |  >>> print(coWbUnit.queryWbVariable('systems'))
+ |  >>> coWbUnit.saveProject(r'D:/example.wbpj')
+ |  >>> coWbUnit.finalize()
+ |
+ |  Methods defined here:
+ |
+ |  `__init__(self, workDir=None, version=201)`
+ |      Constructor of CoWbUnitProcess.
+ |      :param interactive: bool, whether to open the Workbench in interactive mode.
+ |      :param workDir: str, the directory where the Workbench starts.
+ |      :param version: int, workbench version: 2019R1-190/2020R1-201/2021R1-211.
+ |
+ |  `execWbCommand(self, command: 'str') -> 'str'`
+ |      Send python script command to the Workbench for execution
+ |      :param command: str, python script command
+ |      :return: str, execution result
+ |
+ |  `exitWb(self) -> 'str'`
+ |      `Exit` the current Workbench client process
+ |      :return: str
+ |
+ |  `finalize(self)`
+ |      Exit the current workbench and close the TCP Server connection
+ |      :return: None
+ |
+ |  `initialize(self) -> None`
+ |      Called before `execWbCommand`: Start the Workbench in interactive
+ |      mode and open the TCP server port to create a socket connection
+ |      :return: None
+ |
+ |  `queryWbVariable(self, variable: 'str')`
+ |      Query the value of `variable` in the workbench script environment
+ |      :param variable: str, script variable name
+ |      :return: str
+ |
+ |  `saveProject(self, filePath=None, overWrite=True)`
+ |      Save the current workbench project file to `filePath`
+ |      If the Project has not been saved yet, using method: `saveProject()`
+ |      will raise `CommandFailedException`
+ |      :param filePath: Optional[str, None]
+ |      :param overWrite: bool, Whether to overwrite the original project
+ |      :return: str, execution result
+ |
+ |  `terminate(self)`
+ |      Terminates the current Workbench client process
+ |      :return: bool
+ |
+ |  ----------------------------------------------------------------------
 ## 使用方法
 首先从PyWbUnit模块中导入CoWbUnitProcess类，详细文档说明可以通过help(CoWbUnitProcess)查看，以公众号文章：《[ANSYS中使用Python实现高效结构仿真](https://mp.weixin.qq.com/s?__biz=Mzg5MDMwNDIwMQ==&mid=2247484455&idx=1&sn=aac9501bb6fec23276353e4a27c10af9&chksm=cfdfe781f8a86e97bc5afb34678036318ce09d442d82cbeab195c8bdbaeb9e3e00606951469c&token=1162439082&lang=zh_CN#rd)》为例，演示如何使用PyWbUnit调用Workbench完成联合仿真的过程：
 
