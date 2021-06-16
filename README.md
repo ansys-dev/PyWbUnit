@@ -23,7 +23,7 @@ pip install PyWbUnit-0.2.0-cp38-none-win_amd64.whl
 ```
 class CoWbUnitProcess(builtins.object)
  |
- | ` CoWbUnitProcess(workDir=None, version=201)`
+ |  CoWbUnitProcess(workDir=None, version=201)
  |
  |  Unit class for co-simulation with Workbench using Python.
  |
@@ -38,36 +38,36 @@ class CoWbUnitProcess(builtins.object)
  |
  |  Methods defined here:
  |
- |  `__init__(self, workDir=None, version=201)`
+ |  __init__(self, workDir=None, version=201)
  |      Constructor of CoWbUnitProcess.
  |      :param interactive: bool, whether to open the Workbench in interactive mode.
  |      :param workDir: str, the directory where the Workbench starts.
  |      :param version: int, workbench version: 2019R1-190/2020R1-201/2021R1-211.
  |
- |  `execWbCommand(self, command: 'str') -> 'str'`
+ |  execWbCommand(self, command: 'str') -> 'str'
  |      Send python script command to the Workbench for execution
  |      :param command: str, python script command
  |      :return: str, execution result
  |
- |  `exitWb(self) -> 'str'`
+ |  exitWb(self) -> 'str'
  |      `Exit` the current Workbench client process
  |      :return: str
  |
- |  `finalize(self)`
+ |  finalize(self)
  |      Exit the current workbench and close the TCP Server connection
  |      :return: None
  |
- |  `initialize(self) -> None`
+ |  initialize(self) -> None
  |      Called before `execWbCommand`: Start the Workbench in interactive
  |      mode and open the TCP server port to create a socket connection
  |      :return: None
  |
- |  `queryWbVariable(self, variable: 'str')`
+ |  queryWbVariable(self, variable: 'str')
  |      Query the value of `variable` in the workbench script environment
  |      :param variable: str, script variable name
  |      :return: str
  |
- |  `saveProject(self, filePath=None, overWrite=True)`
+ |  saveProject(self, filePath=None, overWrite=True)
  |      Save the current workbench project file to `filePath`
  |      If the Project has not been saved yet, using method: `saveProject()`
  |      will raise `CommandFailedException`
@@ -75,7 +75,7 @@ class CoWbUnitProcess(builtins.object)
  |      :param overWrite: bool, Whether to overwrite the original project
  |      :return: str, execution result
  |
- |  `terminate(self)`
+ |  terminate(self)
  |      Terminates the current Workbench client process
  |      :return: bool
  |
