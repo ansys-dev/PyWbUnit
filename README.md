@@ -110,7 +110,33 @@ class WbServerClient(builtins.object)
 ```
 ## 核心类实现
 
-<img src="https://github.com/ansys-dev/PyWbUnit/blob/0.3.0/WbServerClient.png" alt="WbServerClient" style="zoom:40%;" />
+```python
+# -*- coding: utf-8 -*-
+from socket import *
+
+class WbServerClient:
+
+    _suffix = '<EOF>'
+    _coding = 'US-ASCII'
+    _buffer = 1024
+
+    def __init__(self, aasKey: str):
+        aasList = aasKey.split(':')
+        self._address = (aasList[0], int(aasList[1]))
+
+    def execWbCommand(self, command: str) -> str:
+        sockCommand = command + self._suffix
+        with socket(AF_INET, SOCK_STREAM) as sock:
+            sock.connect(self._address)
+            sock.sendall(sockCommand.encode(self._coding))
+            data = sock.recv(self._buffer).decode()
+        return data
+
+    def queryWbVariable(self, variable) -> str:
+        self.execWbCommand("__variable__=" + variable + ".__repr__()")
+        retValue = self.execWbCommand("Query,__variable__")
+        return retValue[13:]
+```
 
 ## 使用方法
 首先从PyWbUnit模块中导入CoWbUnitProcess类，详细文档说明可以通过help(CoWbUnitProcess)查看，以公众号文章：《[ANSYS中使用Python实现高效结构仿真](https://mp.weixin.qq.com/s?__biz=Mzg5MDMwNDIwMQ==&mid=2247484455&idx=1&sn=aac9501bb6fec23276353e4a27c10af9&chksm=cfdfe781f8a86e97bc5afb34678036318ce09d442d82cbeab195c8bdbaeb9e3e00606951469c&token=1162439082&lang=zh_CN#rd)》为例，演示如何使用PyWbUnit调用Workbench完成联合仿真的过程：
