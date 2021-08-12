@@ -10,20 +10,24 @@
 - 《[SCDM二次开发快速入门|应用+技巧](https://mp.weixin.qq.com/s?__biz=Mzg5MDMwNDIwMQ==&mid=2247483810&idx=1&sn=f88dc36cbb1296e0b45bdeb6a2c83325&chksm=cfdfe204f8a86b12be2bb476ba19a57a1074e4df5f7eb05df82cb0c81858e7db52e5a5cc2562&token=1162439082&lang=zh_CN#rd)》
 - 《[轻松上手Mechanical脚本自动化](https://mp.weixin.qq.com/s?__biz=Mzg5MDMwNDIwMQ==&mid=2247484014&idx=1&sn=b122a0c8bcdde20c5632c04efb8cf1a4&chksm=cfdfe1c8f8a868de229aa8f3b05fb606dc00bf852d6de4336c9f148e4c786c540816072fb639&token=1162439082&lang=zh_CN#rd)》
 - 《[Fluent脚本自动化快速入门](https://mp.weixin.qq.com/s?__biz=Mzg5MDMwNDIwMQ==&mid=2247483965&idx=1&sn=6b197e9c067f07cf111f37345e4c4f4f&chksm=cfdfe19bf8a8688dd53c5c9a721646956f820ea90fb33de92314cb91f01a3728ca609cf01b1e&token=1162439082&lang=zh_CN#rd)》
+- 视频教程：《[Python语言在ANSYS的应用52讲-掌握SCDM脚本建模及ANSYS二次开发能力](https://www.fangzhenxiu.com/course/408360)》
 
 
 ## 安装使用
 
-预编译的二进制库目前只支持Windows x64平台的Python3.7、3.8版本，安装方法如下：
-```batch
-pip install PyWbUnit-0.2.0-cp37-none-win_amd64.whl
-pip install PyWbUnit-0.2.0-cp38-none-win_amd64.whl
-```
+预编译的二进制库目前只支持Windows x64平台的Python3.7、3.8、3.9版本，安装方法如下：
+	pip install PyWbUnit-0.3.0-cp37-none-win_amd64.whl
+    pip install PyWbUnit-0.3.0-cp38-none-win_amd64.whl
+    pip install PyWbUnit-0.3.0-cp39-none-win_amd64.whl
+
 ## API说明
-```
+
+```text
+Help on class CoWbUnitProcess in module PyWbUnit._CoWbUnit:
+
 class CoWbUnitProcess(builtins.object)
- |
- |  CoWbUnitProcess(workDir=None, version=201)
+ |  
+ |  CoWbUnitProcess(workDir=None, version=201, interactive=True)
  |
  |  Unit class for co-simulation with Workbench using Python.
  |
@@ -38,10 +42,12 @@ class CoWbUnitProcess(builtins.object)
  |
  |  Methods defined here:
  |
- |  __init__(self, workDir=None, version=201)
+ |  __init__(self, workDir=None, version=201, interactive=True)
  |      Constructor of CoWbUnitProcess.
+ |      :param interactive: bool, whether to open the Workbench in interactive mode.
  |      :param workDir: str, the directory where the Workbench starts.
  |      :param version: int, workbench version: 2019R1-190/2020R1-201/2021R1-211.
+ |      :param interactive: bool, whether to display the Workbench interface
  |
  |  execWbCommand(self, command: 'str') -> 'str'
  |      Send python script command to the Workbench for execution
@@ -49,7 +55,7 @@ class CoWbUnitProcess(builtins.object)
  |      :return: str, execution result
  |
  |  exitWb(self) -> 'str'
- |      `Exit` the current Workbench client process
+ |      `Exit` the current Workbench client process and close the Workbench server
  |      :return: str
  |
  |  finalize(self)
@@ -57,7 +63,7 @@ class CoWbUnitProcess(builtins.object)
  |      :return: None
  |
  |  initialize(self) -> None
- |      Called before `execWbCommand`: Start the Workbench in interactive
+ |      Called before `execWbCommand`: Start the Workbench in the server
  |      mode and open the TCP server port to create a socket connection
  |      :return: None
  |
@@ -68,9 +74,9 @@ class CoWbUnitProcess(builtins.object)
  |
  |  saveProject(self, filePath=None, overWrite=True)
  |      Save the current workbench project file to `filePath`
- |      If the Project has not been saved yet, using method: `saveProject()`
+ |      If the Project has not been saved, using method: `saveProject()`
  |      will raise `CommandFailedException`
- |      :param filePath: Optional[str, None]
+ |      :param filePath: Optional[str, None], if
  |      :param overWrite: bool, Whether to overwrite the original project
  |      :return: str, execution result
  |
@@ -79,7 +85,31 @@ class CoWbUnitProcess(builtins.object)
  |      :return: bool
  |
  |  ----------------------------------------------------------------------
- ```
+ 
+Help on class WbServerClient in module PyWbUnit._CoWbUnit:
+
+class WbServerClient(builtins.object)
+ |
+ |  WbServerClient(aasKey: 'str')
+ |
+ |  Client Class for the Workbench server connection
+ |  >>> aas_key = 'localhost:9000'
+ |  >>> wbClient = WbServerClient(aas_key)
+ |  >>> wbClient.execWbCommand('<wb_python_command>')
+ |  >>> print(wbClient.queryWbVariable('<wb_python_var>'))
+ |
+ |  Methods defined here:
+ |
+ |  __init__(self, aasKey: 'str')
+ |
+ |  execWbCommand(self, command: 'str') -> 'str'
+ |
+ |  queryWbVariable(self, variable) -> 'str'
+ |
+ |  ----------------------------------------------------------------------
+```
+
+
 ## 使用方法
 首先从PyWbUnit模块中导入CoWbUnitProcess类，详细文档说明可以通过help(CoWbUnitProcess)查看，以公众号文章：《[ANSYS中使用Python实现高效结构仿真](https://mp.weixin.qq.com/s?__biz=Mzg5MDMwNDIwMQ==&mid=2247484455&idx=1&sn=aac9501bb6fec23276353e4a27c10af9&chksm=cfdfe781f8a86e97bc5afb34678036318ce09d442d82cbeab195c8bdbaeb9e3e00606951469c&token=1162439082&lang=zh_CN#rd)》为例，演示如何使用PyWbUnit调用Workbench完成联合仿真的过程：
 
@@ -88,7 +118,7 @@ class CoWbUnitProcess(builtins.object)
 from PyWbUnit import CoWbUnitProcess
 
 # 创建wb单元实例，指定ansys wb版本，如2020R1对应201
-coWbUnit = CoWbUnitProcess(workDir=r'E:/Workdata', version=201)
+coWbUnit = CoWbUnitProcess(workDir=r'E:/Workdata', version=201, interactive=True)
 coWbUnit.initialize()
 command = 'mechSys = GetTemplate(TemplateName="Static Structural", Solver="ANSYS").CreateSystem()'
 coWbUnit.execWbCommand(command)
@@ -182,5 +212,3 @@ coWbUnit.finalize()
 ## 问题反馈
 
 关注微信公众号：“ANSYS仿真与开发”，后台留言；或者邮件至：tguangs@163.com
-
-
