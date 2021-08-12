@@ -45,7 +45,6 @@ class CoWbUnitProcess(builtins.object)
  |
  |  __init__(self, workDir=None, version=201, interactive=True)
  |      Constructor of CoWbUnitProcess.
- |      :param interactive: bool, whether to open the Workbench in interactive mode.
  |      :param workDir: str, the directory where the Workbench starts.
  |      :param version: int, workbench version: 2019R1-190/2020R1-201/2021R1-211.
  |      :param interactive: bool, whether to display the Workbench interface
