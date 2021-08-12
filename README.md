@@ -16,7 +16,8 @@
 ## 安装使用
 
 预编译的二进制库目前只支持Windows x64平台的Python3.7、3.8、3.9版本，安装方法如下：
-	pip install PyWbUnit-0.3.0-cp37-none-win_amd64.whl
+    
+    pip install PyWbUnit-0.3.0-cp37-none-win_amd64.whl
     pip install PyWbUnit-0.3.0-cp38-none-win_amd64.whl
     pip install PyWbUnit-0.3.0-cp39-none-win_amd64.whl
 
